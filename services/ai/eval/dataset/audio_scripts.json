@@ -1,0 +1,45 @@
+{
+  "instructions": "Recording guidelines for consenting volunteers: Record in a normal speaking voice with standard smartphone microphone. Do not read unnaturally fast. Vary accents (Hindi, Indian English, Hinglish).",
+  "scripts": [
+    {
+      "id": "audio_script_01",
+      "mode": "scam",
+      "category": "digital_arrest",
+      "language": "hi",
+      "speaker_type": "Authoritative, aggressive scammer",
+      "script": "नमस्ते, मैं दिल्ली पुलिस क्राइम ब्रांच से सब-इंस्पेक्टर वर्मा बात कर रहा हूं। आपके आधार कार्ड से मुंबई में 14 फर्जी बैंक खाते खोले गए हैं। तुरंत इस वीडियो कॉल पर रहिए और 50,000 रुपये आरबीआई क्लीयरिंग अकाउंट में जमा कीजिए।"
+    },
+    {
+      "id": "audio_script_02",
+      "mode": "scam",
+      "category": "electricity_disconnection",
+      "language": "en",
+      "speaker_type": "Robocall / Urgent human scammer",
+      "script": "Dear consumer, this is an automated message from the electricity board. Your power connection will be cut off tonight at 9:30 PM due to unpaid electricity dues. Call power officer Sharma immediately at 9876543210."
+    },
+    {
+      "id": "audio_script_03",
+      "mode": "scam",
+      "category": "genuine_otp",
+      "language": "en",
+      "speaker_type": "Neutral automated bank IVR",
+      "script": "Thank you for banking with State Bank of India. Your one-time verification password for internet banking login is 4, 8, 2, 9, 1, 0. Valid for ten minutes. Never share this OTP with anyone, including bank employees."
+    },
+    {
+      "id": "audio_script_04",
+      "mode": "scam",
+      "category": "relative_in_trouble",
+      "language": "en",
+      "speaker_type": "Panicked young person / fake grandson",
+      "script": "Dadu, it's Rahul! Please don't tell mom or dad, but I was in a car accident and the police officer here is threatening to lock me up. Can you please send Rs 35,000 immediately to this clinic UPI?"
+    },
+    {
+      "id": "audio_script_05",
+      "mode": "scam",
+      "category": "delivery_update",
+      "language": "hi",
+      "speaker_type": "Friendly delivery partner",
+      "script": "नमस्ते सर, मैं अमेज़न से डिलीवरी बॉय बोल रहा हूं। आपका पार्सल लेकर आ रहा हूं। क्या आप घर पर हैं? डिलीवरी के समय आपको ओटीपी 3918 बताना होगा।"
+    }
+  ]
+}

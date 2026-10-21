@@ -1,0 +1,118 @@
+{
+  "scams": [
+    {
+      "id": "digital_arrest",
+      "name": "Digital Arrest / Fake Law Enforcement",
+      "description": "Scammers impersonate police, CBI, ED, or customs officials claiming an illegal parcel or Aadhaar criminal involvement, placing the victim under fake 'video surveillance' arrest.",
+      "typical_script_lines": [
+        "A courier parcel in your name contains narcotics / fake passports",
+        "Your Aadhaar is linked to 14 money laundering accounts in Mumbai",
+        "You must remain on continuous Skype / WhatsApp video call under digital arrest",
+        "Transfer verification deposit to the RBI secret clearing account"
+      ],
+      "tactics": ["authority", "fear", "urgency", "secrecy", "payment_demand"],
+      "safe_response": "Real police or CBI never conduct arrests or investigations over video calls. Hang up and report immediately to cybercrime portal 1930."
+    },
+    {
+      "id": "fake_kyc_bank_block",
+      "name": "Fake Bank KYC & Account Block Threat",
+      "description": "SMS or call claiming your bank account, SIM card, or PAN has been suspended due to pending KYC.",
+      "typical_script_lines": [
+        "Dear customer, your SBI / HDFC account has been blocked due to incomplete KYC",
+        "Click here immediately to update PAN or account will be permanently deactivated",
+        "Call customer care executive at this number to avoid netbanking suspension"
+      ],
+      "tactics": ["urgency", "fear", "authority"],
+      "safe_response": "Banks never send SMS with third-party APK links or phone numbers. Check account status only inside your official bank app."
+    },
+    {
+      "id": "electricity_disconnection",
+      "name": "Electricity Bill Disconnection Threat",
+      "description": "Urgent SMS threatening that your electricity will be disconnected tonight due to an unpaid bill.",
+      "typical_script_lines": [
+        "Dear Consumer, your electricity power will be disconnected tonight at 9:30 PM",
+        "Your previous month bill was not updated. Immediately call electricity officer at [PHONE]"
+      ],
+      "tactics": ["urgency", "fear", "payment_demand"],
+      "safe_response": "Power utility boards never send disconnect threats from personal mobile numbers. Verify bill history only on the official electricity discom portal."
+    },
+    {
+      "id": "fake_customer_care",
+      "name": "Search Engine Fake Customer Care",
+      "description": "Fraudulent phone numbers posted on Google Maps / Search impersonating airline, courier, or refund customer care.",
+      "typical_script_lines": [
+        "I am calling from courier refund support department",
+        "To process your Rs 50 refund, please install this support app (AnyDesk / TeamViewer)",
+        "Please accept the 9-digit connection code on your mobile"
+      ],
+      "tactics": ["authority", "urgency", "other"],
+      "safe_response": "Never install remote screen-sharing tools like AnyDesk, TeamViewer, or QuickSupport on request of anyone."
+    },
+    {
+      "id": "lottery_prize",
+      "name": "Lottery, KBC & Prize Fraud",
+      "description": "Claims that victim won Rs 25 Lakhs in Kaun Banega Crorepati or a lucky draw, demanding advance tax or processing fees.",
+      "typical_script_lines": [
+        "Congratulations! Your WhatsApp number has won Rs 25,00,000 in KBC Lucky Draw",
+        "To release your prize cheque, pay Rs 12,500 government clearance tax"
+      ],
+      "tactics": ["secrecy", "urgency", "payment_demand"],
+      "safe_response": "Legitimate lotteries never ask winners to pay advance fees or processing charges before claiming prizes."
+    },
+    {
+      "id": "investment_lure",
+      "name": "High-Return Part-Time & Stock Investment Lure",
+      "description": "WhatsApp or Telegram groups offering guaranteed 300% returns or daily income by liking YouTube videos and trading on fake crypto portals.",
+      "typical_script_lines": [
+        "Work from home: Earn Rs 3,000 to Rs 8,000 daily by simply reviewing hotels",
+        "Exclusive VIP Institutional Stock Trading group with guaranteed 50% weekly returns"
+      ],
+      "tactics": ["urgency", "secrecy", "other"],
+      "safe_response": "Any scheme promising guaranteed high returns with zero risk is a financial trap. Never send money to personal UPI accounts for trading."
+    },
+    {
+      "id": "relative_in_trouble",
+      "name": "Relative or Child in Emergency",
+      "description": "Urgent distress call impersonating a grandson, child, or acquaintance claiming hospital emergency or police custody.",
+      "typical_script_lines": [
+        "Grandpa, please don't tell mom! I was caught in a car accident and police need bail money right now",
+        "I am calling on behalf of your son from hospital, transfer Rs 40,000 immediately for surgery"
+      ],
+      "tactics": ["urgency", "fear", "secrecy", "payment_demand"],
+      "safe_response": "Always hang up and call your relative directly on their known personal phone number before sending money."
+    },
+    {
+      "id": "parcel_customs",
+      "name": "Parcel Held in Customs",
+      "description": "Foreign parcel or gift package allegedly held at airport customs requiring customs duty clearance.",
+      "typical_script_lines": [
+        "A gift parcel containing foreign currency and gold jewelry is held at Mumbai Airport customs",
+        "Pay customs clearance charge of Rs 35,000 to avoid legal action"
+      ],
+      "tactics": ["authority", "fear", "payment_demand"],
+      "safe_response": "Customs departments never request duty payments into personal individual bank or UPI accounts."
+    },
+    {
+      "id": "job_offer",
+      "name": "Work From Home & Overseas Job Offer",
+      "description": "Fake appointment letters demanding registration fees, document processing fees, or laptop security deposits.",
+      "typical_script_lines": [
+        "You are selected for Data Entry / Airline ground staff position",
+        "Deposit Rs 4,500 refundable training and badge fee"
+      ],
+      "tactics": ["urgency", "payment_demand"],
+      "safe_response": "Reputable employers never demand upfront security deposits or training fees from candidates."
+    },
+    {
+      "id": "remote_access_app",
+      "name": "Malicious App / APK File Download",
+      "description": "WhatsApp message containing an APK file disguised as a wedding card, bill invoice, or bank update.",
+      "typical_script_lines": [
+        "Wedding_Card_Invitation.apk",
+        "Install this government subsidy application to receive Rs 2,000 credit"
+      ],
+      "tactics": ["urgency", "other"],
+      "safe_response": "Never click or install .apk files received via WhatsApp or SMS. Only install applications from the official Google Play Store or Apple App Store."
+    }
+  ]
+}

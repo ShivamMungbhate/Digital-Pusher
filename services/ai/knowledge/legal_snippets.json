@@ -1,0 +1,44 @@
+{
+  "provisions": [
+    {
+      "id": "tenancy_notice_period",
+      "category": "Tenancy & Rental",
+      "topic": "Mandatory Notice for Eviction",
+      "summary": "Under Section 106 of the Transfer of Property Act, 1882, in the absence of a contract to the contrary, a lease of immovable property for residential/monthly purposes requires at least 15 days notice expiring with the end of a month of tenancy. Abrupt 24-hour or 7-day eviction demands without contractual basis are generally unlawful.",
+      "citation": "Section 106, Transfer of Property Act, 1882",
+      "needs_verification": true
+    },
+    {
+      "id": "security_deposit_refund",
+      "category": "Tenancy & Rental",
+      "topic": "Arbitrary Forfeiture of Security Deposit",
+      "summary": "Security deposits paid by tenants are held in trust and must be refunded upon peaceful handover, subject only to reasonable deductions for actual documented unpaid rent or structural damage. Unilateral total forfeiture without receipts or breakdown is a disputable unfair practice.",
+      "citation": "Model Tenancy Act / State Rent Control Provisions",
+      "needs_verification": true
+    },
+    {
+      "id": "quiet_enjoyment_entry",
+      "category": "Tenancy & Rental",
+      "topic": "Landlord Right of Entry",
+      "summary": "Tenants have a common-law right to peaceful possession and quiet enjoyment. A landlord cannot arbitrarily enter premises at any hour without prior notice; standard legal guidelines mandate at least 24 hours prior written or electronic notice for reasonable inspection.",
+      "citation": "Model Tenancy Act, Section 15",
+      "needs_verification": true
+    },
+    {
+      "id": "consumer_unfair_contract",
+      "category": "Consumer Protection",
+      "topic": "Unfair Contract Terms",
+      "summary": "Under Section 2(46) of the Consumer Protection Act, 2019, an 'unfair contract' includes terms that cause a significant change in consumer rights, such as requiring excessive security deposits, imposing unreasonable penalties, or unilateral cancellation without notice.",
+      "citation": "Section 2(46) & Section 89, Consumer Protection Act, 2019",
+      "needs_verification": true
+    },
+    {
+      "id": "ccpa_dark_patterns_liability",
+      "category": "Consumer Protection",
+      "topic": "Prohibition of Deceptive E-commerce Patterns",
+      "summary": "Guidelines for Prevention and Regulation of Dark Patterns (2023) prohibit any person or platform from engaging in specified dark patterns (drip pricing, subscription traps, basket sneaking). Engaging in such practices amounts to misleading advertisement or unfair trade practice.",
+      "citation": "CCPA Dark Pattern Guidelines 2023 read with Section 18 Consumer Protection Act",
+      "needs_verification": true
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "source": "Guidelines for Prevention and Regulation of Dark Patterns, 2023 (Central Consumer Protection Authority, Ministry of Consumer Affairs, Food & Public Distribution, Government of India)",
+  "disclaimer": "All entries are extracted from the published CCPA Gazette Notification and marked for user verification.",
+  "categories": [
+    {
+      "id": "false_urgency",
+      "name": "False Urgency",
+      "definition": "Falsely stating or implying the sense of urgency or scarcity to mislead a user into making an immediate purchase or taking an immediate action.",
+      "examples": [
+        "Showing fake countdown timers that reset upon page refresh",
+        "Displaying misleading claims such as 'Only 2 rooms left at this price' when adequate stock exists"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "basket_sneaking",
+      "name": "Basket Sneaking",
+      "definition": "Inclusion of additional items such as products, services, payments to charity, or donation at the time of checkout without the explicit consent of the user.",
+      "examples": [
+        "Pre-ticked checkboxes for travel insurance, packaging charges, or charity donations",
+        "Automatically adding convenience fee or product protection to cart"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "confirm_shaming",
+      "name": "Confirm Shaming",
+      "definition": "Using a phrase, video, audio or any other means to create a sense of fear or shame or ridicule or guilt in the mind of the user so as to nudge the user to act in a certain way.",
+      "examples": [
+        "Button saying 'No, I don't care about saving money' to decline subscription",
+        "Opt-out link saying 'I prefer risking my family's health'"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "forced_action",
+      "name": "Forced Action",
+      "definition": "Forcing a user into taking an action that would require the user to buy additional goods or subscribe to an unrelated service or share personal information in order to buy or subscribe to the primary product/service.",
+      "examples": [
+        "Requiring sign-up to a newsletter or unrelated app installation to proceed with a purchase",
+        "Forcing users to grant access to contacts and location for basic calculator function"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "subscription_trap",
+      "name": "Subscription Trap",
+      "definition": "Making cancellation of a paid subscription impossible or a complex and lengthy process, including hiding the cancellation option or forcing phone calls.",
+      "examples": [
+        "Allowing 1-click online subscription but requiring a physical mail or phone call during business hours to cancel",
+        "Hiding the cancel subscription link under 5 layers of deep sub-menus"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "interface_interference",
+      "name": "Interface Interference",
+      "definition": "A design element that manipulates the user interface in ways that point the user to certain actions or obscure relevant information.",
+      "examples": [
+        "Making the 'Accept All Cookies / Renew' button bright green and large, while the 'Reject / Cancel' button is tiny, faint gray on white",
+        "Hiding terms and conditions in ultra-small font"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "bait_and_switch",
+      "name": "Bait and Switch",
+      "definition": "The practice of advertising a particular outcome based on the user's action but deceptively serving a completely different outcome.",
+      "examples": [
+        "Offering an item at Rs 499, but once selected, showing out of stock and replacing with Rs 1,499 alternative",
+        "Showing a download icon that actually opens an advertisement"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "drip_pricing",
+      "name": "Drip Pricing",
+      "definition": "A practice whereby elements of prices are not revealed upfront or in-between, and such other charges are revealed only at checkout or after confirmation of purchase.",
+      "examples": [
+        "Concealing mandatory handling fees, service charges, or checkout fees until the final payment step",
+        "Showing base fare as Rs 2,000 but mandatory fees double the price at payment"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "disguised_advertisement",
+      "name": "Disguised Advertisement",
+      "definition": "A practice of posing, presenting, or inserting advertisements within user interfaces such that they appear as organic content, editorial news, or navigation controls.",
+      "examples": [
+        "Sponsored search results made visually indistinguishable from organic links without clear #Ad tags",
+        "Fake system alerts that are actually promotional pop-ups"
+      ],
+      "needs_verification": true
+    },
+    {
+      "id": "nagging",
+      "name": "Nagging",
+      "definition": "A dark pattern practice due to which a user is disrupted and annoyed by repeated and persistent requests, options, or interruptions to buy, subscribe, or give permission.",
+      "examples": [
+        "Constant pop-ups repeatedly asking 'Enable Notifications' or 'Upgrade to Premium' with no permanent dismiss option"
+      ],
+      "needs_verification": true
+    }
+  ]
+}

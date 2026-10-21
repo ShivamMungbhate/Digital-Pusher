@@ -1,0 +1,26 @@
+{
+  "national_cybercrime": {
+    "name": "National Cyber Crime Reporting Helpline",
+    "portal": "cybercrime.gov.in",
+    "phone": "1930",
+    "verification_status": "TODO: verify operational status and state-specific routing with official authorities"
+  },
+  "national_consumer_helpline": {
+    "name": "National Consumer Helpline (NCH)",
+    "portal": "consumerhelpline.gov.in",
+    "phone": "1915",
+    "verification_status": "TODO: verify working hours and regional toll-free numbers"
+  },
+  "senior_citizen_helpline": {
+    "name": "National Senior Citizen Helpline (Elder Line)",
+    "portal": "elderline.dosje.gov.in",
+    "phone": "14567",
+    "verification_status": "TODO: verify national toll-free support coverage"
+  },
+  "legal_aid": {
+    "name": "National Legal Services Authority (NALSA)",
+    "portal": "nalsa.gov.in",
+    "phone": "15100",
+    "verification_status": "TODO: verify legal aid counsel availability"
+  }
+}

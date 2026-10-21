@@ -1,0 +1,145 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Digital Pusher API",
+    "description": "Backend API for Digital Pusher - Google Gemini Hackathon Project protecting seniors from digital manipulation, scams, dark patterns, and deceptive paperwork.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4000/api",
+      "description": "Local Development Server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new senior or family user",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password", "role"],
+                "properties": {
+                  "name": { "type": "string", "example": "Shashi Sharma" },
+                  "email": { "type": "string", "example": "shashi@example.com" },
+                  "password": { "type": "string", "example": "SecurePass123!" },
+                  "role": { "type": "string", "enum": ["senior", "family"], "example": "senior" },
+                  "phone": { "type": "string", "example": "+919876543210" },
+                  "preferredLanguage": { "type": "string", "example": "en" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Registration successful" },
+          "400": { "description": "Validation error" },
+          "409": { "description": "Email already exists" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Log in and obtain JWT cookies and tokens",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "example": "shashi@example.com" },
+                  "password": { "type": "string", "example": "SecurePass123!" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get authenticated user profile",
+        "tags": ["Auth"],
+        "responses": {
+          "200": { "description": "User profile data" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/consents/invite-code": {
+      "post": {
+        "summary": "Senior generates family link invite code",
+        "tags": ["Consent"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "shareLevel": { "type": "string", "enum": ["summary", "summary_and_media"] },
+                  "alertThreshold": { "type": "string", "enum": ["medium", "high"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Invite code generated" },
+          "403": { "description": "Forbidden (senior only)" }
+        }
+      }
+    },
+    "/consents/link": {
+      "post": {
+        "summary": "Family member links with senior via invite code",
+        "tags": ["Consent"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["inviteCode"],
+                "properties": {
+                  "inviteCode": { "type": "string", "example": "DP-A1B2C3" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Link requested, awaiting senior acceptance" }
+        }
+      }
+    },
+    "/consents": {
+      "get": {
+        "summary": "List consents for current user",
+        "tags": ["Consent"],
+        "responses": {
+          "200": { "description": "List of consents" }
+        }
+      }
+    },
+    "/submissions": {
+      "post": {
+        "summary": "Upload suspicious message, document, or audio/video for analysis",
+        "tags": ["Submissions"],
+        "responses": {
+          "201": { "description": "Submission accepted and queued for analysis" }
+        }
+      }
+    }
+  }
+}
