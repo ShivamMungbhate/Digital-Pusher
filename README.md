@@ -1,75 +1,60 @@
 # Digital Pusher 🛡️
-> Protecting seniors and families from online scams, digital manipulation, and predatory contracts.
-> Built for the Google Gemini Hackathon.
+> **AI-Powered Guardian Shield against Digital Manipulation, Scams & Predatory Contracts for Seniors and Families.**  
+> *Built for the Google Gemini Developer Competition / Hackathon.*
 
-## System Architecture & Live Ports
-
-```
-[React Vite PWA]       -->     [Express API]       -->     [Gemini AI Service]
-(port 3000)                   (port 4000)                 (port 5001 - FastAPI)
-  ├── Senior UI / Large Text    ├── Auth & Consent          ├── PII Masking
-  ├── Voice Recording           ├── AES-256-GCM Storage     ├── RAG Knowledge Base
-  ├── Loading Progress Poll     ├── Queue (BullMQ/In-Proc)  ├── Multimodal Analysis
-  └── Scam Result Screen        └── Zod Contract Validator  └── Speech Audio Synthesis
-```
-
-| Service | Port | Purpose | URL |
-| :--- | :--- | :--- | :--- |
-| **Web Frontend** | `3000` | Senior-friendly PWA client | [http://localhost:3000](http://localhost:3000) |
-| **Backend API** | `4000` | REST API, MongoDB, Storage & Queue | [http://localhost:4000/api/docs](http://localhost:4000/api/docs) |
-| **AI Engine** | `5001` | Python FastAPI + Gemini multimodal pipeline | [http://localhost:5001/docs](http://localhost:5001/docs) |
+[![Google Gemini 2.5](https://img.shields.io/badge/Gemini-2.5%20Flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React PWA](https://img.shields.io/badge/React-18%20PWA-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Express](https://img.shields.io/badge/Express-4.21-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose%208-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## Running the Services
+## 📌 Executive Summary & Problem Statement
 
-### 1. Zero-Config Local Development
-```bash
-# Terminal 1: Python AI Service (Port 5001)
-cd services/ai
-.\.venv\Scripts\uvicorn.exe app.main:app --host 0.0.0.0 --port 5001
+Over **$10 billion** is stolen annually through digital fraud, and seniors are disproportionately targeted by aggressive psychological manipulation: **fake arrest threats**, **urgent parcel seizures**, **deceptive dark patterns in digital checkouts**, and **incomprehensible legal documents**. 
 
-# Terminal 2: Express Backend (Port 4000)
-npm run dev:api
+When faced with a panic-inducing call, an intimidating legal notice, or a tricky cancellation flow, seniors often have nowhere to turn without feeling embarrassed or waiting hours for busy family members.
 
-# Terminal 3: React Web Frontend (Port 3000)
-npm run dev:web
-```
-
-### 2. Running Test Suites
-```bash
-# Run backend tests (Auth, Storage, Submissions, Zod, AES-256)
-npm test
-
-# Run AI service tests (PII masking, Policy, Injection defense, Schema)
-cd services/ai && .\.venv\Scripts\pytest.exe -v
-
-# Run AI accuracy & false-positive benchmark
-cd services/ai && .\.venv\Scripts\python.exe eval/run_eval.py
-```
+**Digital Pusher** is an empathetic, calm, and intelligent digital shield. Seniors forward any suspicious text, voice note, screen recording, or document photo. Within seconds, **Google Gemini 2.5 Flash** evaluates the underlying manipulation tactics, strips away the fear and jargon, returns a clear verdict in plain English or Hindi, and generates an emergency family alert draft.
 
 ---
 
-## How to Demo the Vertical Slice (Step-by-Step)
+## 🌟 The 3 Operational Modes (One Unified Pipeline)
 
-1. Open your browser to **[http://localhost:3000](http://localhost:3000)**.
-2. Click **"Sign In"** in the top navigation bar.
-3. Click the **"Senior Demo"** button to auto-fill the login form, then click **"Sign In to Account"**.
-4. On the Home screen, click **"Check something now"** (or click the Mode A **"Suspicious Message or Call"** card).
-5. On the Submission page:
-   - Click the **"Sample Scam"** helper button (or paste any suspicious message, or click **"Record Voice"** to record audio).
-   - Click **"Check for Scams & Tricks"**.
-6. **Watch the Calm Progress Screen**: The screen transitions to a soothing progress animation with active status updates while the worker processes the submission.
-7. **Scam Result Screen**:
-   - **Verdict Banner**: 🔴 **Likely Scam** with high confidence.
-   - **Voice Explanation Player**: Stream the senior-friendly audio verdict directly in your browser.
-   - **Manipulation Tactics**: Review chips for *Authority*, *Urgency*, *Fear*, and *Payment Demand* with the exact quoted evidence.
-   - **Safe Independent-Verification Steps**: Plain-language steps for safety.
-   - **Action Buttons**: *"Alert My Family"* and ready-to-copy report drafts.
+Digital Pusher unifies three distinct defense capabilities through a single multimodal AI engine:
+
+### 1. 🛡️ Mode A: Scam Guardian
+*Target: Suspicious calls, voice recordings, SMS/WhatsApp texts, and chat screenshots.*
+- **5-Vector Psychological Analysis**: Evaluates threats against **Urgency**, **Authority Impersonation** (CBI, Police, Customs, TRAI), **Fear & Coercion**, **Secrecy Demands** (*"Don't tell anyone"*), and **Payment Demands** (*Crypto, Gift Cards, instant UPI*).
+- **Verbatim Evidence Quotes**: Cites exact phrases from the message proving how the scammer is trying to deceive.
+- **Calm Voice Explanations**: In-browser audio synthesis for seniors who prefer listening over reading.
+- **Safe Verification Checklist**: Step-by-step guidance on how to independently verify claims without using the scammer's provided contacts.
+
+### 2. 🕵️ Mode B: Dark Pattern Auditor
+*Target: Screen recordings, cancellation funnels, and checkout screenshots.*
+- **CCPA & FTC Pattern Recognition**: Flags deceptive UX practices including **Drip Pricing**, **Sneak into Basket**, **Confirm Shaming**, **Roach Motels (Hard to Cancel)**, and **Fake Countdown Timers**.
+- **Actionable Defense**: Provides timestamps and plain-language explanations of why the design is coercive, plus an auto-drafted cancellation request or formal complaint.
+
+### 3. 📄 Mode C: Paperwork Decoder
+*Target: Photos or PDFs of legal notices, recovery letters, rental agreements, and government orders.*
+- **Jargon Elimination**: Translates dense legalese into an 8th-grade reading level summary in English or Hindi.
+- **Risky Clause Detection**: Identifies aggressive arbitration clauses, unilateral penalty terms, and indemnity risks.
+- **Deadline Extractor**: Extracts strict statutory or reply deadlines into a structured calendar-ready schedule.
 
 ---
 
-## Key Assumptions & Handled Edge Cases
-1. **Local IPv4 vs IPv6 on Windows**: Node.js 24 on Windows can delay on `localhost` IPv6 resolution; the backend automatically targets `http://127.0.0.1:5001` to ensure instant sub-millisecond dispatch.
-2. **Database Fallback**: MongoDB connects to `mongodb://localhost:27017/digital_pusher` with an automatic, seamless in-memory fallback if no standalone MongoDB instance is running.
-3. **Queue Fallback**: If Redis is not available, the queue operates automatically using an in-process worker queue with identical retry and error handling.
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+    User(["👤 Senior User / Family Member"]) --> WebApp["📱 React Vite PWA (Port 3000)\n• In-browser Voice Recorder (MediaRecorder)\n• High-Contrast Senior Typography\n• English & Hindi (i18next)\n• Real-time Polling (TanStack Query)"]
+
+    WebApp -->|REST API + JWT Auth| ExpressAPI["⚙️ Express API Backend (Port 4000)\n• Rate Limiting & Helmet Security\n• Multer Upload Validation (Caps: Audio 25MB, Doc 20MB, Video 100MB)\n• Client PII Masking Engine\n• AES-256-GCM Encrypted Media Storage\n• BullMQ Queue with In-Process Fallback"]
+
+    ExpressAPI -->|Zod Validated HTTP Request| AIService["🧠 Gemini AI Engine (Port 5001 - FastAPI)\n• Google GenAI SDK (google-genai)\n• Gemini 2.5 Flash with response_schema\n• Grounding Knowledge Base (10 Scam Archetypes)\n• Deterministic Policy Guardrails\n• Edge TTS Audio Generator"]
+
+    AIService -->|Gemini API Key| GoogleGemini["✨ Google Gemini 2.5 Flash API\n• Strict Structured JSON Output\n• Fast Multimodal Inference (< 2.5s)"]
+
+    ExpressAPI --> Mongo[("🍃 MongoDB Database\n(Real Mongo or In-Memory Server)")]
