@@ -1,60 +1,160 @@
-# Digital Pusher 🛡️
-> **AI-Powered Guardian Shield against Digital Manipulation, Scams & Predatory Contracts for Seniors and Families.**  
-> *Built for the Google Gemini Developer Competition / Hackathon.*
+# Digital Pusher
 
-[![Google Gemini 2.5](https://img.shields.io/badge/Gemini-2.5%20Flash-4285F4?logo=google&logoColor=white)](https://ai.google.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![React PWA](https://img.shields.io/badge/React-18%20PWA-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Express](https://img.shields.io/badge/Express-4.21-000000?logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose%208-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+**Pushing back against digital manipulation.**
+An AI guardian that helps people, especially seniors, spot scams, understand the trick in plain language, and get a trusted family member involved before they act. Built for the Google Gemini Hackathon by **Team Mutant Coders**.
 
 ---
 
-## 📌 Executive Summary & Problem Statement
+## The problem
+Scams use urgency, fake authority, fear and secrecy ("don't tell anyone") to push people into decisions before they can think. Existing tools block known numbers or links, but they rarely explain *why* something is a scam, in the person's own language, or bring the family in at the right time.
 
-Over **$10 billion** is stolen annually through digital fraud, and seniors are disproportionately targeted by aggressive psychological manipulation: **fake arrest threats**, **urgent parcel seizures**, **deceptive dark patterns in digital checkouts**, and **incomprehensible legal documents**. 
+## What Digital Pusher does
+- **Scam check:** analyses message text, screenshots, voice notes and call recordings.
+- **Tactic breakdown:** names the pressure tactics (urgency, authority, fear, secrecy, payment demand) with quoted evidence.
+- **Plain-language replies:** short explanations in Hindi and English, with spoken audio.
+- **Safe next steps:** independent verification advice, for example "call the number printed on your bank card, not the one in the message".
+- **Family alerts (consent-based):** the senior links a trusted contact, and alerts fire only above a risk threshold.
+- **Dark-pattern audit:** finds hidden fees, fake urgency and subscription traps in checkout flows, mapped to consumer-protection categories.
+- **Paperwork decoder:** explains notices and agreements, flags risky clauses and deadlines, and drafts a reply.
+- **Drafts and exports:** complaint, report and cancellation drafts as PDF, and deadlines as `.ics` calendar files.
 
-When faced with a panic-inducing call, an intimidating legal notice, or a tricky cancellation flow, seniors often have nowhere to turn without feeling embarrassed or waiting hours for busy family members.
+> **Status:** see the feature table below for what is working today.
 
-**Digital Pusher** is an empathetic, calm, and intelligent digital shield. Seniors forward any suspicious text, voice note, screen recording, or document photo. Within seconds, **Google Gemini 2.5 Flash** evaluates the underlying manipulation tactics, strips away the fear and jargon, returns a clear verdict in plain English or Hindi, and generates an emergency family alert draft.
+## Feature status
+| Feature | Status |
+|---|---|
+| Auth, roles, senior-to-family consent linking | Done |
+| AI service with RAG, PII masking, policy engine, speech output | Done |
+| Submission pipeline, encrypted storage, job queue | In progress |
+| Scam result screen, audio recorder, upload | In progress |
+| Family alerts and dashboard | Planned |
+| Dark-pattern and paperwork result screens, exports | Planned |
+| Privacy jobs (auto-delete, delete-my-data), seed data | Planned |
 
----
+*(Update this table as you go.)*
 
-## 🌟 The 3 Operational Modes (One Unified Pipeline)
+## How it works
+```
+User (web PWA / Telegram)
+        │
+        ▼
+ Express API ──► Job queue (BullMQ / in-process) ──► Worker
+        │                                              │
+        ▼                                              ▼
+    MongoDB                              Python AI service (FastAPI)
+ (users, consents,                       ├─ Router (Gemini)
+  submissions,                           ├─ RAG grounding (scam patterns,
+  analyses, alerts)                      │   dark-pattern taxonomy, legal snippets)
+        │                                ├─ Analyzer (Gemini, structured JSON)
+        ▼                                ├─ Policy layer (risk, escalation, disclaimers)
+ Family alert engine                     ├─ Drafter (Gemini)
+ (email / Telegram)                      └─ Speech output (Gemini TTS)
+```
 
-Digital Pusher unifies three distinct defense capabilities through a single multimodal AI engine:
+## Where Gemini is used
+- **Multimodal understanding:** screenshots, documents, audio and video.
+- **Structured output:** every analysis is a typed JSON contract that drives the UI and alerts.
+- **Multilingual reasoning and speech:** Hindi and English explanations, with audio.
+- **Retrieval grounding:** explanations are tied to a curated pattern library, not invented.
+- **Fast and strong model split:** a fast model for routing and analysis, a stronger model for drafts.
 
-### 1. 🛡️ Mode A: Scam Guardian
-*Target: Suspicious calls, voice recordings, SMS/WhatsApp texts, and chat screenshots.*
-- **5-Vector Psychological Analysis**: Evaluates threats against **Urgency**, **Authority Impersonation** (CBI, Police, Customs, TRAI), **Fear & Coercion**, **Secrecy Demands** (*"Don't tell anyone"*), and **Payment Demands** (*Crypto, Gift Cards, instant UPI*).
-- **Verbatim Evidence Quotes**: Cites exact phrases from the message proving how the scammer is trying to deceive.
-- **Calm Voice Explanations**: In-browser audio synthesis for seniors who prefer listening over reading.
-- **Safe Verification Checklist**: Step-by-step guidance on how to independently verify claims without using the scammer's provided contacts.
+Model IDs are configured through environment variables, so they can be swapped without code changes.
 
-### 2. 🕵️ Mode B: Dark Pattern Auditor
-*Target: Screen recordings, cancellation funnels, and checkout screenshots.*
-- **CCPA & FTC Pattern Recognition**: Flags deceptive UX practices including **Drip Pricing**, **Sneak into Basket**, **Confirm Shaming**, **Roach Motels (Hard to Cancel)**, and **Fake Countdown Timers**.
-- **Actionable Defense**: Provides timestamps and plain-language explanations of why the design is coercive, plus an auto-drafted cancellation request or formal complaint.
+## Responsible AI
+- **Consent first:** family sharing is opt-in, revocable, and summary-only by default.
+- **PII masking:** phone, card and Aadhaar-like numbers are masked before any model call.
+- **Honest uncertainty:** low-confidence or high-stakes cases return "unclear" and escalate to human help.
+- **No overclaiming:** it flags behavioural tactics only. It does not claim to detect deepfake or cloned voices.
+- **Information, not advice:** legal output is general information with citations, never legal advice.
+- **Prompt-injection defense:** user content is treated as untrusted data.
+- **Privacy controls:** encrypted media at rest, auto-delete, and a delete-my-data endpoint.
 
-### 3. 📄 Mode C: Paperwork Decoder
-*Target: Photos or PDFs of legal notices, recovery letters, rental agreements, and government orders.*
-- **Jargon Elimination**: Translates dense legalese into an 8th-grade reading level summary in English or Hindi.
-- **Risky Clause Detection**: Identifies aggressive arbitration clauses, unilateral penalty terms, and indemnity risks.
-- **Deadline Extractor**: Extracts strict statutory or reply deadlines into a structured calendar-ready schedule.
+## Evaluation
+We evaluate on an internal labelled set that includes genuine bank, OTP and delivery messages, so false positives are measured, not assumed.
 
----
+| Metric | Result |
+|---|---|
+| Overall accuracy | 86.2% |
+| False-positive rate on genuine messages | 0.0% |
+| Prompt-injection defense | 100% |
 
-## 🏗️ System Architecture
+> These figures come from our own small, partly synthetic test set. Treat them as indicative, not as production accuracy. Dataset size and method are documented in `services/ai/eval/report.md`.
 
-```mermaid
-flowchart TD
-    User(["👤 Senior User / Family Member"]) --> WebApp["📱 React Vite PWA (Port 3000)\n• In-browser Voice Recorder (MediaRecorder)\n• High-Contrast Senior Typography\n• English & Hindi (i18next)\n• Real-time Polling (TanStack Query)"]
+## Tech stack
+- **Frontend:** React (Vite) PWA, TanStack Query, Tailwind CSS, i18next
+- **Backend:** Node.js, Express, Mongoose, Zod, Multer, BullMQ
+- **AI service:** Python, FastAPI, Pydantic, Google Gemini API, vector store for retrieval
+- **Data:** MongoDB, optional Redis
+- **Infra:** Docker Compose
 
-    WebApp -->|REST API + JWT Auth| ExpressAPI["⚙️ Express API Backend (Port 4000)\n• Rate Limiting & Helmet Security\n• Multer Upload Validation (Caps: Audio 25MB, Doc 20MB, Video 100MB)\n• Client PII Masking Engine\n• AES-256-GCM Encrypted Media Storage\n• BullMQ Queue with In-Process Fallback"]
+## Repository structure
+```
+digital-pusher/
+  apps/web/             React PWA
+  apps/api/             Express API
+  services/ai/          Gemini analysis service
+  services/ai-mock/     Mock AI service for offline development
+  contract/             Shared JSON schema for the AI response
+  docker-compose.yml
+```
 
-    ExpressAPI -->|Zod Validated HTTP Request| AIService["🧠 Gemini AI Engine (Port 5001 - FastAPI)\n• Google GenAI SDK (google-genai)\n• Gemini 2.5 Flash with response_schema\n• Grounding Knowledge Base (10 Scam Archetypes)\n• Deterministic Policy Guardrails\n• Edge TTS Audio Generator"]
+## Getting started
 
-    AIService -->|Gemini API Key| GoogleGemini["✨ Google Gemini 2.5 Flash API\n• Strict Structured JSON Output\n• Fast Multimodal Inference (< 2.5s)"]
+### Prerequisites
+Node.js 20+, Python 3.11+, MongoDB, a Gemini API key from [Google AI Studio](https://aistudio.google.com), and optionally Redis and Docker.
 
-    ExpressAPI --> Mongo[("🍃 MongoDB Database\n(Real Mongo or In-Memory Server)")]
+### Setup
+```bash
+git clone https://github.com/<your-org>/digital-pusher.git
+cd digital-pusher
+cp .env.example .env     # then fill in the values below
+```
+
+### Environment variables (main ones)
+| Variable | Purpose |
+|---|---|
+| `GEMINI_API_KEY` | Gemini API key (server side only, never commit it) |
+| `GEMINI_FAST_MODEL` / `GEMINI_STRONG_MODEL` | Model IDs for analysis and drafting |
+| `GEMINI_TTS_MODEL` / `GEMINI_EMBED_MODEL` | Speech and embedding models |
+| `AI_SERVICE_URL` | AI service address (real or mock) |
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Auth signing secret |
+| `MEDIA_ENCRYPTION_KEY` | Key for encrypting stored media |
+| `REDIS_URL` | Optional. Falls back to an in-process queue if unset |
+| `TELEGRAM_BOT_TOKEN` | Optional, for the Telegram bot |
+
+### Run
+```bash
+docker compose up        # or start each service manually
+npm run seed             # optional demo data
+```
+Default ports: web `3000`, API `4000`, AI service `5001`.
+
+### Test
+```bash
+npm test                 # API tests
+cd services/ai && pytest # AI service tests
+```
+
+## Demo
+1. Log in as the demo senior (created by the seed script).
+2. Submit a suspicious message or voice note.
+3. View the verdict, tactics, spoken explanation and safe steps.
+4. Trigger a family alert and open the family dashboard.
+
+## Roadmap
+- Website and link risk check
+- More regional languages
+- Browser warning on checkout pages
+
+
+## Limitations
+- It analyses what the user sends. It does not listen to live calls or monitor accounts.
+- It is not a replacement for bank fraud systems.
+- Helpline numbers live in `config/helplines.json` and must be verified before use.
+- Dark-pattern and legal references are labelled "needs verification" until checked against the official text.
+
+
+## Disclaimer
+Digital Pusher provides general information to help people make safer decisions. It is not legal, financial or law-enforcement advice.
+
