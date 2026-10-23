@@ -20,8 +20,15 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Standard error unwrapping
-    const message = error.response?.data?.error?.message || error.message || 'Network request failed';
+    // Unpack validation details if present
+    const errData = error.response?.data?.error;
+    let message = errData?.message || error.message || 'Network request failed';
+    if (errData?.details && Array.isArray(errData.details) && errData.details.length > 0) {
+      const detailMsgs = errData.details.map((d: any) => d.message).filter(Boolean).join('. ');
+      if (detailMsgs) {
+        message = detailMsgs;
+      }
+    }
     return Promise.reject(new Error(message));
   }
 );

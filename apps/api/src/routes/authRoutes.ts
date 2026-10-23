@@ -5,6 +5,7 @@ import {
   logout,
   refresh,
   getMe,
+  deleteMe,
   registerSchema,
   loginSchema,
   refreshSchema
@@ -20,5 +21,6 @@ router.post('/login', authLimiter, validateRequest(loginSchema), login);
 router.post('/logout', authenticate, logout);
 router.post('/refresh', validateRequest(refreshSchema), refresh);
 router.get('/me', authenticate, getMe);
+router.delete('/me', authenticate, deleteMe);
 
 export default router;

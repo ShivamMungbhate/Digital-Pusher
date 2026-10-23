@@ -189,6 +189,7 @@ export const getSubmissionById = async (
         language: submission.language,
         sourceType: submission.sourceType,
         originalFileName: submission.originalFileName,
+        rawTextMasked: submission.rawTextMasked,
         status: submission.status,
         error: submission.error,
         createdAt: submission.createdAt,

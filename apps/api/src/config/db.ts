@@ -6,12 +6,28 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 let memoryServer: MongoMemoryServer | null = null;
 
 export async function connectDB(): Promise<typeof mongoose> {
+  // In test environment, use isolated in-memory Mongo server to prevent test collision & data loss
+  if (env.NODE_ENV === 'test' || process.env.NODE_ENV === 'test') {
+    if (mongoose.connection.readyState === 1) {
+      return mongoose;
+    }
+    if (!memoryServer) {
+      const isWindowsArm64 = process.platform === 'win32' && process.arch === 'arm64';
+      memoryServer = await MongoMemoryServer.create({
+        binary: isWindowsArm64 ? { arch: 'x64' } : undefined
+      });
+    }
+    const inMemoryUri = memoryServer.getUri();
+    await mongoose.connect(inMemoryUri);
+    return mongoose;
+  }
+
   try {
     logger.info(`Attempting to connect to MongoDB at ${env.MONGO_URI}...`);
     // Try to connect with a short timeout first to test availability
     await mongoose.connect(env.MONGO_URI, {
-      serverSelectionTimeoutMS: 2000,
-      connectTimeoutMS: 2000
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000
     });
     logger.info('Connected to MongoDB successfully.');
     return mongoose;

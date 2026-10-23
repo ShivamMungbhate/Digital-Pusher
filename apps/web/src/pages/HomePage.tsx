@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Shield, AlertTriangle, Eye, FileText, Mic, Upload, ArrowRight } from 'lucide-react';
+import { Shield, AlertTriangle, Eye, FileText, Mic, Upload, ArrowRight, Users, BellRing } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function HomePage() {
@@ -128,6 +128,32 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+      </div>
+
+      {/* Family Shield Protection Banner */}
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg border border-blue-800 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 bg-blue-500/30 text-blue-300 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1">
+            <Users className="w-6 h-6 text-amber-300" />
+          </div>
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-200 text-xs font-bold uppercase tracking-wider mb-1">
+              <BellRing className="w-3.5 h-3.5 text-amber-300" />
+              <span>Consensual Family Protection</span>
+            </div>
+            <h3 className="text-xl font-black text-white">Family Shield & Emergency Alerts</h3>
+            <p className="text-blue-100 text-sm max-w-xl mt-1 leading-relaxed">
+              Connect elderly parents with trusted family members. When high-risk scams or dark patterns are detected, guardians receive instant alerts with consent.
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/family"
+          className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-blue-900 hover:bg-blue-50 font-black rounded-xl text-sm transition flex-shrink-0 shadow-md"
+        >
+          <span>Open Family Shield</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
     </div>
   );

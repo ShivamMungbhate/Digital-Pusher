@@ -3,11 +3,13 @@ import { connectDB } from './config/db.js';
 import { env } from './config/env.js';
 import { logger } from './config/logger.js';
 import { seedDemoAccounts } from './utils/seedData.js';
+import { scheduleRetentionJob } from './services/retentionService.js';
 
 async function startServer() {
   try {
     await connectDB();
     await seedDemoAccounts();
+    scheduleRetentionJob();
 
     const app = createApp();
 

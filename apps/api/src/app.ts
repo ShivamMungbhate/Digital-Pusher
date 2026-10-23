@@ -15,6 +15,9 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import consentRoutes from './routes/consentRoutes.js';
 import submissionRoutes from './routes/submissionRoutes.js';
+import alertRoutes from './routes/alertRoutes.js';
+import { deleteMe } from './controllers/authController.js';
+import { authenticate } from './middlewares/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -89,9 +92,11 @@ export function createApp(): Express {
   }
 
   // API Routes
+  app.delete('/api/me', authenticate, deleteMe);
   app.use('/api/auth', authRoutes);
   app.use('/api/consents', consentRoutes);
   app.use('/api/submissions', submissionRoutes);
+  app.use('/api/alerts', alertRoutes);
 
   // 404 handler
   app.use((req, res) => {

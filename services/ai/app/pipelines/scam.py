@@ -8,6 +8,7 @@ from app.safety.pii import mask_pii
 from app.safety.policy import evaluate_policy
 from app.rag.retriever import retriever
 from app.tts import synthesize_explanation_audio
+from app.resilience import call_gemini_resilient
 
 logger = logging.getLogger("scam_pipeline")
 
@@ -108,15 +109,8 @@ def analyze_scam_submission(
         )
         return evaluate_policy(response)
 
-    # 2. Try Live Google Gemini Model if GEMINI_API_KEY is configured
-    api_key = os.getenv("GEMINI_API_KEY")
-    if api_key and not os.getenv("SKIP_LIVE_GEMINI"):
-        try:
-            client = genai.Client(api_key=api_key)
-            model_name = os.getenv("GEMINI_FAST_MODEL", "gemini-2.5-flash")
-            logger.info(f"Invoking Live Gemini Model ({model_name}) for scam analysis")
-
-            prompt = f"""You are Digital Pusher Scam Guardian, an expert cyber fraud investigator protecting seniors.
+    # 2. Resilient Gemini Execution (Strong Model -> Fast Model -> Fallback, with JSON retry)
+    prompt = f"""You are Digital Pusher Scam Guardian, an expert cyber fraud investigator protecting seniors.
 Analyze this user submission for psychological and financial manipulation tricks:
 <SUSPICIOUS_CONTENT>
 {masked_text}
@@ -131,22 +125,10 @@ Directives:
 4. Provide safe independent verification steps (e.g. call number printed on physical bank card).
 5. Generate a family alert draft and a cybercrime report draft if scam tactics are found."""
 
-            gemini_res = client.models.generate_content(
-                model=model_name,
-                contents=prompt,
-                config={
-                    'response_mime_type': 'application/json',
-                    'response_schema': AnalyzeResponse
-                }
-            )
-
-            if gemini_res.parsed and isinstance(gemini_res.parsed, AnalyzeResponse):
-                logger.info("Successfully received and parsed live Gemini structured output")
-                live_response = gemini_res.parsed
-                live_response.audioUrl = synthesize_explanation_audio(live_response.summary, "hi" if is_hindi else "en")
-                return evaluate_policy(live_response)
-        except Exception as e:
-            logger.warning(f"Live Gemini API call failed or timed out: {e}. Falling back gracefully to grounded local engine.")
+    gemini_result, path_used = call_gemini_resilient(prompt, language, submission_id)
+    if gemini_result:
+        gemini_result.audioUrl = synthesize_explanation_audio(gemini_result.summary, "hi" if is_hindi else "en")
+        return evaluate_policy(gemini_result)
 
     # 3. Grounded Local Engine Fallback (Instant, Zero-Cost, 100% Offline Safe)
     grounding = retriever.retrieve_scam_grounding(masked_text, top_k=2)

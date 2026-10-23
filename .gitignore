@@ -6,3 +6,10 @@ storage
 *.log
 .DS_Store
 coverage
+__pycache__/
+*.pyc
+services/ai/.cache/
+services/ai/audio_cache/
+.env
+.env.*
+node_modules/

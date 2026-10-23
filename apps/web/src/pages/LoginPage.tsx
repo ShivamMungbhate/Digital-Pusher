@@ -29,6 +29,7 @@ export default function LoginPage() {
     try {
       if (isRegister) {
         if (!name.trim()) throw new Error('Please enter your name');
+        if (password.length < 6) throw new Error('Password must be at least 6 characters long');
         await register(name, email, password, role, phone || undefined);
       } else {
         await login(email, password);
@@ -158,12 +159,15 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-bold text-slate-700 mb-1">Password</label>
+          <label className="block text-sm font-bold text-slate-700 mb-1">
+            Password {isRegister && <span className="text-xs font-normal text-slate-500">(minimum 6 characters)</span>}
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder={isRegister ? "At least 6 characters" : "••••••••"}
+            minLength={isRegister ? 6 : undefined}
             className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900"
             required
           />

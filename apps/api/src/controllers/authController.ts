@@ -4,6 +4,12 @@ import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { env } from '../config/env.js';
 import { User, IUser } from '../models/User.js';
+import { Submission } from '../models/Submission.js';
+import { Analysis } from '../models/Analysis.js';
+import { Alert } from '../models/Alert.js';
+import { Consent } from '../models/Consent.js';
+import { TelegramLink } from '../models/TelegramLink.js';
+import { storage } from '../utils/storage.js';
 import { AuditLog } from '../models/AuditLog.js';
 import { AppError } from '../middlewares/errorHandler.js';
 import { AuthRequest } from '../middlewares/auth.js';
@@ -253,3 +259,60 @@ export const getMe = async (req: AuthRequest, res: Response, next: NextFunction)
     next(err);
   }
 };
+
+/**
+ * DELETE /api/me & DELETE /api/auth/me
+ * Permanently deletes user account, all submissions, physical media files, alerts, and consents.
+ */
+export const deleteMe = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!req.user) {
+      throw new AppError('Not authenticated', 401, 'UNAUTHORIZED');
+    }
+
+    const userId = req.user._id;
+
+    // 1. Find all submissions by this user and delete physical encrypted media files
+    const userSubmissions = await Submission.find({ userId });
+    for (const sub of userSubmissions) {
+      if (sub.storageKey) {
+        try {
+          await storage.delete(sub.storageKey);
+        } catch (storageErr: any) {
+          // Non-fatal, continue with deletion
+        }
+      }
+    }
+
+    // 2. Remove Submissions and Analyses
+    await Submission.deleteMany({ userId });
+    await Analysis.deleteMany({ userId });
+
+    // 3. Remove Alerts involving this user
+    await Alert.deleteMany({
+      $or: [{ seniorId: userId }, { familyId: userId }]
+    });
+
+    // 4. Remove Consents involving this user
+    await Consent.deleteMany({
+      $or: [{ seniorId: userId }, { familyId: userId }]
+    });
+
+    // 5. Remove Telegram Links
+    await TelegramLink.deleteMany({ userId });
+
+    // 6. Delete User document
+    await User.findByIdAndDelete(userId);
+
+    // 7. Clear authentication cookies
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+
+    res.json({
+      message: 'Account, submissions, media, alerts, and consents permanently deleted successfully'
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+

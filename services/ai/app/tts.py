@@ -31,7 +31,7 @@ def synthesize_explanation_audio(text: str, language: str = "en") -> Optional[st
         # Determine language code for gTTS
         lang_code = "hi" if language.startswith("hi") else "en"
 
-        tts = gTTS(text=text, lang=lang_code, slow=False)
+        tts = gTTS(text=text, lang=lang_code, slow=False, timeout=5)
         tts.save(str(file_path))
 
         return f"/audio/{audio_id}"

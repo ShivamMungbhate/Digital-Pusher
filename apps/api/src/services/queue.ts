@@ -6,6 +6,7 @@ import { Submission } from '../models/Submission.js';
 import { Analysis } from '../models/Analysis.js';
 import { storage } from '../utils/storage.js';
 import { analysisContractSchema, AnalysisContract } from '../utils/aiContract.js';
+import { triggerFamilyAlerts } from './alertService.js';
 
 export interface SubmissionJobData {
   submissionId: string;
@@ -113,7 +114,14 @@ export async function processSubmission(submissionId: string): Promise<void> {
       { upsert: true, new: true }
     );
 
-    // 5. Update submission status to done
+    // 5. Trigger family alert rules based on active consent and risk threshold
+    try {
+      await triggerFamilyAlerts(submission, analysis);
+    } catch (alertErr: any) {
+      logger.error({ err: alertErr.message, submissionId: submission._id }, 'Alert trigger warning (non-fatal)');
+    }
+
+    // 6. Update submission status to done
     submission.status = 'done';
     submission.error = undefined;
     await submission.save();

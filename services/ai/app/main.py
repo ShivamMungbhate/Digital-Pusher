@@ -15,6 +15,15 @@ from app.media.preprocessor import preprocess_media
 from app.pipelines.scam import analyze_scam_submission
 from app.pipelines.dark_pattern import analyze_dark_pattern_submission
 from app.pipelines.paperwork import analyze_paperwork_submission
+from app.safety.pii import mask_pii
+from app.resilience import (
+    get_input_hash,
+    get_cached_analysis,
+    set_cached_analysis,
+    is_demo_cache_only,
+    find_demo_cache_match,
+    build_safe_fallback
+)
 
 load_dotenv()
 
@@ -97,12 +106,28 @@ async def analyze_submission(
         if not combined_text:
             combined_text = "[Empty or non-text submission]"
 
-        # 2. Mode Classification / Routing
+        # 2. PII Masking and Input Hash for Caching
+        masked_text, pii_map = mask_pii(combined_text)
+        cache_key = get_input_hash(masked_text, mode, language)
+
+        # 3. DEMO_CACHE_ONLY & Cache Lookup
+        if is_demo_cache_only():
+            demo_match = find_demo_cache_match(masked_text, mode)
+            if demo_match:
+                logger.info("Analysis served via DEMO_CACHE_ONLY mode. Path: demo_cache")
+                return demo_match
+
+        cached_response = get_cached_analysis(cache_key)
+        if cached_response:
+            logger.info("Analysis served from cache. Path: cache_hit")
+            return cached_response
+
+        # 4. Mode Classification / Routing
         selected_mode = mode
         if selected_mode == "auto":
             selected_mode, confidence = classify_mode(combined_text, filename, content_type)
 
-        # 3. Pipeline Dispatch
+        # 5. Pipeline Dispatch
         if selected_mode == "scam":
             response = analyze_scam_submission(combined_text, language, submissionId)
         elif selected_mode == "dark_pattern":
@@ -112,30 +137,14 @@ async def analyze_submission(
         else:
             response = analyze_scam_submission(combined_text, language, submissionId)
 
+        # 6. Save in Cache
+        set_cached_analysis(cache_key, response)
         return response
 
     except Exception as e:
         logger.error(f"Error in pipeline execution: {e}", exc_info=True)
         # Safe fallback response on failure
-        return AnalyzeResponse(
-            mode="scam" if mode == "auto" else mode,
-            risk="medium",
-            verdict="unclear",
-            confidence=0.5,
-            summary="We encountered an issue during deep analysis. Please exercise caution and do not send money or sign documents before consulting family or verified support.",
-            tactics=[],
-            findings=[],
-            clauses=[],
-            deadlines=[],
-            safeSteps=[
-                "Do not share OTPs, transfer funds, or sign agreements while verification is pending.",
-                "Consult a trusted family member or contact the Cybercrime Helpline at 1930."
-            ],
-            drafts=[],
-            audioUrl=None,
-            escalate=True,
-            disclaimer="This is information to help you decide, not legal or financial advice."
-        )
+        return build_safe_fallback(mode, language)
 
 if __name__ == "__main__":
     import uvicorn

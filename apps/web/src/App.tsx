@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Shield, Type, Languages, LogIn, LogOut, User, PlusCircle } from 'lucide-react';
+import { Shield, Type, Languages, LogIn, LogOut, User, PlusCircle, Users } from 'lucide-react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SubmitPage from './pages/SubmitPage';
 import ResultPage from './pages/ResultPage';
+import FamilyPage from './pages/FamilyPage';
 
 function AppContent() {
   const { t, i18n } = useTranslation();
@@ -63,6 +64,14 @@ function AppContent() {
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
+                  to="/family"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-xs transition shadow-sm"
+                  title="Manage Family Shield connections and alerts"
+                >
+                  <Users className="w-4 h-4" />
+                  <span>Family Shield</span>
+                </Link>
+                <Link
                   to="/submit"
                   className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl font-bold text-xs transition"
                 >
@@ -101,6 +110,7 @@ function AppContent() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/results/:id" element={<ResultPage />} />
+          <Route path="/family" element={<FamilyPage />} />
         </Routes>
       </main>
 

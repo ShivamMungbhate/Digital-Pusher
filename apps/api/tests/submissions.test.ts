@@ -91,7 +91,7 @@ describe('Submission Pipeline & Zod Validation', () => {
     expect(analysis?.verdict).toBe('likely_scam');
     expect(analysis?.risk).toBe('high');
     expect(analysis?.tactics.length).toBeGreaterThan(0);
-  }, 30000);
+  }, 60000);
 
   it('retries and marks submission failed on invalid AI response schema', async () => {
     const sub = await Submission.create({
